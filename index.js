@@ -15,9 +15,11 @@ DeviceEventEmitter.addListener('WeChat_Resp', resp => {
 
 function wrapRegisterApp(nativeFunc) {
   if (!nativeFunc) {
+    console.log('#####wechat addon # nativeFunc is null')
     return undefined;
   }
   return (...args) => {
+    console.log('nativeFunc=', nativeFunc)
     if (isAppRegistered) {
       // FIXME(Yorkie): we ignore this error if AppRegistered is true.
       return Promise.resolve(true);
@@ -27,6 +29,7 @@ function wrapRegisterApp(nativeFunc) {
       nativeFunc.apply(null, [
         ...args,
         (error, result) => {
+          console.log('#####error', error, "result", result)
           if (!error) {
             return resolve(result);
           }
@@ -101,8 +104,11 @@ export const registerApp = wrapRegisterApp(WeChat.registerApp);
  * @param {String} appdesc - the app description
  * @return {Promise}
  */
-export const registerAppWithDescription = wrapRegisterApp(
-  WeChat.registerAppWithDescription,
+// export const registerAppWithDescription = wrapRegisterApp(
+//   WeChat.registerAppWithDescription,
+// );
+export const registerAppWithUniversalLink = wrapRegisterApp(
+  WeChat.registerAppWithUniversalLink,
 );
 
 /**
