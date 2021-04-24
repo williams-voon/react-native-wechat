@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.internal.Files;
@@ -228,7 +228,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         }
 
         if (uri != null) {
-            this._getImage(uri, new ResizeOptions(100, 100), new ImageCallback() {
+            this._getImage(uri, new ResizeOptions(500, 400), new ImageCallback() { //this._getImage(uri, new ResizeOptions(100, 100), new ImageCallback() {
                 @Override
                 public void invoke(@Nullable Bitmap bitmap) {
                     WeChatModule.this._share(scene, data, bitmap, callback);
@@ -416,7 +416,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
             return;
         }
 
-        this._getImage(imageUri, null, new ImageCallback() {
+        this._getImage(imageUri, new ResizeOptions(1000, 2000), new ImageCallback() { // this._getImage(imageUri, null, new ImageCallback() {
             @Override
             public void invoke(@Nullable Bitmap bitmap) {
                 callback.invoke(bitmap == null ? null : new WXImageObject(bitmap));
